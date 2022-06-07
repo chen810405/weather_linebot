@@ -1,4 +1,5 @@
 import os
+import re
 from flask import Flask, request, abort
 from linebot import (
     LineBotApi, WebhookHandler
@@ -37,8 +38,15 @@ def callback():
 #訊息傳遞區塊
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
-    message = TextSendMessage(text=event.message.text)
-    line_bot_api.reply_message(event.reply_token, message)
+    message = event.message.text
+    if re.match("你是誰",message):
+        line_bot_api.reply_message(event.reply_token, TextSendMessage("才不告訴你呢!"))
+    else:
+        line_bot_api.reply_message(event.reply_token, TextSendMessage(message))
+
+    
+
+
 
 #主程式
 if __name__ == "__main__":
