@@ -1,3 +1,4 @@
+from email.mime import image
 import os
 import re
 from flask import Flask, request, abort
@@ -39,14 +40,38 @@ def callback():
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
     message = event.message.text
-    if re.match("你是誰",message):
+    if re.match("你是誰",message): #回覆訊息及回傳貼圖
         sticker_message = StickerMessage(
             package_id = "446",
             sticker_id = "2027"
         )
         line_bot_api.reply_message(event.reply_token,[sticker_message, TextSendMessage("才不告訴你呢!")])
         
-    else:
+    elif re.match("傻眼",message): #回傳貼圖
+        sticker_message = StickerMessage(
+            package_id = "446",
+            sticker_id = "1995"
+        )
+        line_bot_api.reply_message(event.reply_token, sticker_message)
+
+    elif re.match("你要去哪裡", message): #回傳地點位置
+        location_message = LocationSendMessage(
+            title = "台北市立動物園",
+            address = "116台北市文山區新光路二段30號",
+            latitude = 24.99825495043049,
+            longitude =  121.5816754546207 
+        )
+        line_bot_api.reply_message(event.reply_tpken, location_message)
+
+    elif re.match("幹嘛", message):
+        image_message = ImageSendMessage(
+            original_content_url = "https://www.publicdomainpictures.net/pictures/270000/velka/weather-forecast.jpg",
+            preview_image_url = "https://www.publicdomainpictures.net/pictures/270000/velka/weather-forecast.jpg"
+        )
+        line_bot_api.reply_message(event.reply_token, image_message)
+        
+
+    else: #學你說話
         line_bot_api.reply_message(event.reply_token, TextSendMessage(message))
 
     
