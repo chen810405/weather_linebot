@@ -54,7 +54,7 @@ def handle_message(event):
         )
         line_bot_api.reply_message(event.reply_token, sticker_message)
 
-    elif re.match("你要去哪裡", message): #回傳地點位置
+    elif re.match("去哪裡", message): #回傳地點位置
         location_message = LocationSendMessage(
             title = "台北市立動物園",
             address = "116台北市文山區新光路二段30號",
@@ -69,7 +69,13 @@ def handle_message(event):
             preview_image_url = "https://www.publicdomainpictures.net/pictures/270000/velka/weather-forecast.jpg"
         )
         line_bot_api.reply_message(event.reply_token, image_message)
-        
+
+    elif re.match("晚安", message):
+        sticker_message = StickerMessage(
+            package_id = "6370",
+            sticker_id = "11088039" 
+        )    
+        line_bot_api.reply_message(event.reply_token, sticker_message)
 
     else: #學你說話
         line_bot_api.reply_message(event.reply_token, TextSendMessage(message))
