@@ -40,7 +40,12 @@ def callback():
 def handle_message(event):
     message = event.message.text
     if re.match("你是誰",message):
-        line_bot_api.reply_message(event.reply_token, TextSendMessage("才不告訴你呢!"))
+        sticker_message = StickerMessage(
+            package_id = "446",
+            sticker_id = "2027"
+        )
+        line_bot_api.reply_message(event.reply_token,sticker_message, TextSendMessage("才不告訴你呢!"))
+        
     else:
         line_bot_api.reply_message(event.reply_token, TextSendMessage(message))
 
