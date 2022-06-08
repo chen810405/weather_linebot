@@ -92,7 +92,7 @@ def handle_message(event):
             original_content_url ="https://i.imgur.com/k4bdGpQt.mp4",
             prewiew_image_url = "https://cdn.pixabay.com/photo/2021/10/19/12/28/shiba-6723441_1280.jpg"
         )
-        line_bot_api.reply_message(event.reply_token, video_message)
+        line_bot_api.reply_message(event.reply_token, ["有收到嗎?", video_message])
 
     else: #學你說話
         line_bot_api.reply_message(event.reply_token, TextSendMessage(message))
