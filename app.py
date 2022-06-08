@@ -84,10 +84,10 @@ def handle_message(event):
         )
         line_bot_api.reply_message(event.reply_token, sticker_message)
 
-    elif re.match("荳荳", message):
+    elif re.match("荳荳", message): #回傳影片
         video_message = VideoSendMessage(
-            original_content_url ="https://photos.app.goo.gl/yu1G1FKNysk4ma297",
-            prewiew_image_url = "https://photos.app.goo.gl/WrWxVdYdjNeo8rF49"
+            original_content_url ="https://i.imgur.com/Ax9kVeG.mp4",
+            prewiew_image_url = "https://i.imgur.com/3Wlquhs.jpg"
         )
         line_bot_api.reply_message(event.reply_token, video_message)
 
