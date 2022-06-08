@@ -63,19 +63,33 @@ def handle_message(event):
         )
         line_bot_api.reply_message(event.reply_tpken, location_message)
 
-    elif re.match("幹嘛", message):
+    elif re.match("幹嘛", message): #回傳圖片
         image_message = ImageSendMessage(
             original_content_url = "https://www.publicdomainpictures.net/pictures/270000/velka/weather-forecast.jpg",
             preview_image_url = "https://www.publicdomainpictures.net/pictures/270000/velka/weather-forecast.jpg"
         )
         line_bot_api.reply_message(event.reply_token, image_message)
 
-    elif re.match("晚安", message):
+    elif re.match("晚安", message): #回傳貼圖
         sticker_message = StickerMessage(
-            package_id = "6370",
-            sticker_id = "11088039" 
+            package_id = "6359",
+            sticker_id = "11069871" 
         )    
         line_bot_api.reply_message(event.reply_token, sticker_message)
+
+    elif re.match("笑死",message):
+        sticker_message = StickerMessage(
+            package_id = "1070",
+            sticker_id = "17863"
+        )
+        line_bot_api.reply_message(event.reply_token, sticker_message)
+
+    elif re.match("荳荳", message):
+        video_message = VideoSendMessage(
+            original_content_url ="https://photos.app.goo.gl/yu1G1FKNysk4ma297",
+            prewiew_image_url = "https://photos.app.goo.gl/WrWxVdYdjNeo8rF49"
+        )
+        line_bot_api.reply_message(event.reply_token, video_message)
 
     else: #學你說話
         line_bot_api.reply_message(event.reply_token, TextSendMessage(message))
