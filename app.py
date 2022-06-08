@@ -86,7 +86,7 @@ def handle_message(event):
         )
         line_bot_api.reply_message(event.reply_token, sticker_message)
 
-    elif re.match("荳荳", message): #回傳影片
+    if re.match("荳荳", message): #回傳影片
         video_message = VideoSendMessage(
             original_content_url ="https://i.imgur.com/k4bdGpQt.mp4",
             # prewiew_image_url = "https://cdn.pixabay.com/photo/2021/10/19/12/28/shiba-6723441_1280.jpg"
