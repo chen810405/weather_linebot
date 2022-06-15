@@ -52,11 +52,13 @@ def get_report(city): #得到xx縣市的未來36小時預報
     all_weather_report=[] #36小時的天氣(每12小時放在一個dict再串成list)
     for info in range(3):
         weather_report={
-            "Time:":(report[0]["time"][info]["startTime"]+"至"+report[0]["time"][info]["endTime"]),
-            "Weather_type:":(report[0]["time"][info]["parameter"]["parameterName"]), #天氣現象
-            "MinT:":(report[2]["time"][info]["parameter"]['parameterName']+"度"),
-            "MaxT:":(report[4]["time"][info]["parameter"]["parameterName"]+"度"), 
-            "Rain:":(report[1]["time"][info]["parameter"]["parameterName"]+"%"),
+            "city:":city,
+            "Time_from:":(report[0]["time"][info]["startTime"]+"至"),
+            "Time_to:":(report[0]["time"][info]["endTime"]), #預測時間
+            "Weather_type:":(report[0]["time"][info]["parameter"]["parameterName"]), #天氣型態
+            "MinT:":(report[2]["time"][info]["parameter"]['parameterName']+"度"), #最低溫
+            "MaxT:":(report[4]["time"][info]["parameter"]["parameterName"]+"度"), #最高溫
+            "Rain:":(report[1]["time"][info]["parameter"]["parameterName"]+"%"), #降雨機率
             "CI:":(report[3]["time"][info]["parameter"]["parameterName"]) #舒適度:CI
 
         }
@@ -70,15 +72,19 @@ def get_report(city): #得到xx縣市的未來36小時預報
     
     #把抓取到的預報資料帶入flexmessage格式裡面
     for info2 in range(len(all_weather_report)):
-        template_weather_report["contents"][info2]["body"]["contents"][2]["contents"][1]["text"] = all_weather_report[info2]["Time:"]
-        template_weather_report["contents"][info2]["body"]["contents"][3]["contents"][1]["text"] = all_weather_report[info2]["Weather_type:"]
-        template_weather_report["contents"][info2]["body"]["contents"][4]["contents"][1]["text"] = all_weather_report[info2]["MinT:"]
-        template_weather_report["contents"][info2]["body"]["contents"][5]["contents"][1]["text"] = all_weather_report[info2]["MaxT:"]
-        template_weather_report["contents"][info2]["body"]["contents"][6]["contents"][1]["text"] = all_weather_report[info2]["Rain:"]
-        template_weather_report["contents"][info2]["body"]["contents"][7]["contents"][1]["text"] = all_weather_report[info2]["CI:"]
+        template_weather_report["contents"][info2]["body"]["contents"][0]["text"] = all_weather_report[info2]["city:"]#city
+        template_weather_report["contents"][info2]["body"]["contents"][3]["contents"][1]["text"] = all_weather_report[info2]["Time_from:"]
+        template_weather_report["contents"][info2]["body"]["contents"][4]["contents"][1]["text"] = all_weather_report[info2]["Time_to:"]
+        template_weather_report["contents"][info2]["body"]["contents"][6]["contents"][0]["text"] = all_weather_report[info2]["Weather_type:"]
+        template_weather_report["contents"][info2]["body"]["contents"][7]["contents"][1]["text"] = all_weather_report[info2]["MinT:"]
+        template_weather_report["contents"][info2]["body"]["contents"][8]["contents"][1]["text"] = all_weather_report[info2]["MaxT:"]
+        template_weather_report["contents"][info2]["body"]["contents"][9]["contents"][1]["text"] = all_weather_report[info2]["Rain:"]
+        template_weather_report["contents"][info2]["body"]["contents"][10]["contents"][1]["text"] = all_weather_report[info2]["CI:"]
 
     print("\n\n",template_weather_report)
     return template_weather_report
+
+    
 
 #訊息傳遞區塊
 @handler.add(MessageEvent, message=TextMessage)
@@ -124,7 +130,7 @@ def handle_message(event):
         city = message[2:] #縣市名稱
         city = city.replace("台","臺")#臺取代台
         if not (city in cities): #如果縣市清單裡找不到使用者輸入的縣市名
-            line_bot_api.reply_message(event.reply_token, TextSendMessage("查詢格式為:天氣縣市名,如:天氣臺北市"))
+            line_bot_api.reply_message(event.reply_token, TextSendMessage("查詢格式錯誤!!\n請輸入正確格式:天氣縣市名,\n如:天氣臺北市"))
         else:
 #             get_report(city) #開始取得天氣資料 
             #套入flex message格式
