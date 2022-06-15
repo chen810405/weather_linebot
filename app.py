@@ -74,8 +74,8 @@ def get_report(city): #得到xx縣市的未來36小時預報
     for info2 in range(len(all_weather_report)):
         template_weather_report["contents"][info2]["body"]["contents"][0]["text"] = all_weather_report[info2]["city:"]#city
         template_weather_report["contents"][info2]["body"]["contents"][3]["contents"][1]["text"] = all_weather_report[info2]["Time_from:"]
-        template_weather_report["contents"][info2]["body"]["contents"][4]["contents"][1]["text"] = all_weather_report[info2]["Time_to:"]
-        template_weather_report["contents"][info2]["body"]["contents"][6]["contents"][0]["text"] = all_weather_report[info2]["Weather_type:"]
+        template_weather_report["contents"][info2]["body"]["contents"][4]["contents"][0]["text"] = all_weather_report[info2]["Time_to:"]
+        template_weather_report["contents"][info2]["body"]["contents"][6]["contents"][1]["text"] = all_weather_report[info2]["Weather_type:"]
         template_weather_report["contents"][info2]["body"]["contents"][7]["contents"][1]["text"] = all_weather_report[info2]["MinT:"]
         template_weather_report["contents"][info2]["body"]["contents"][8]["contents"][1]["text"] = all_weather_report[info2]["MaxT:"]
         template_weather_report["contents"][info2]["body"]["contents"][9]["contents"][1]["text"] = all_weather_report[info2]["Rain:"]
