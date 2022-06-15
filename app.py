@@ -52,12 +52,12 @@ def get_report(city): #得到xx縣市的未來36小時預報
     all_weather_report=[] #36小時的天氣(每12小時放在一個dict再串成list)
     for info in range(3):
         weather_report={
-            "時間:":(report[0]["time"][info]["startTime"]+"至"+report[0]["time"][info]["endTime"]),
-            "天氣型態:":(report[0]["time"][info]["parameter"]["parameterName"]), #天氣現象
-            "降雨機率:":(report[1]["time"][info]["parameter"]["parameterName"]+"%"),
-            "最低溫:":(report[2]["time"][info]["parameter"]['parameterName']+"度"),
-            "最高溫:":(report[4]["time"][info]["parameter"]["parameterName"]+"度"), 
-            "舒適度:":(report[3]["time"][info]["parameter"]["parameterName"]) #舒適度:CI
+            "Time:":(report[0]["time"][info]["startTime"]+"至"+report[0]["time"][info]["endTime"]),
+            "Weather_type:":(report[0]["time"][info]["parameter"]["parameterName"]), #天氣現象
+            "MinT:":(report[2]["time"][info]["parameter"]['parameterName']+"度"),
+            "MaxT:":(report[4]["time"][info]["parameter"]["parameterName"]+"度"), 
+            "Rain:":(report[1]["time"][info]["parameter"]["parameterName"]+"%"),
+            "CI:":(report[3]["time"][info]["parameter"]["parameterName"]) #舒適度:CI
 
         }
         all_weather_report.append(weather_report) #串起來
@@ -120,7 +120,7 @@ def handle_message(event):
         line_bot_api.reply_message(event.reply_token, sticker_message)
     
 #輸入天氣回傳輸入框(flex_message對話框?)輸入要查詢的縣市天氣
-    elif re.match("天氣",message): #ex:使用者輸入"天氣台北市"
+    if message[:2] == "天氣": #ex:使用者輸入"天氣台北市"
         city = message[2:] #縣市名稱
         city = city.replace("台","臺")#臺取代台
         if not (city in cities): #如果縣市清單裡找不到使用者輸入的縣市名
