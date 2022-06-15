@@ -1,0 +1,416 @@
+{
+  "type": "carousel",
+  "contents": [
+    {
+      "type": "bubble",
+      "body": {
+        "type": "box",
+        "layout": "vertical",
+        "spacing": "sm",
+        "contents": [
+          {
+            "type": "text",
+            "text": "未來12小時預報",
+            "wrap": true,
+            "weight": "bold",
+            "size": "xl"
+          },
+          {
+            "type": "separator",
+            "margin": "xl"
+          },
+          {
+            "type": "box",
+            "layout": "baseline",
+            "contents": [
+              {
+                "type": "icon",
+                "url": "https://cdn-icons-png.flaticon.com/512/2693/2693710.png",
+                "size": "xl"
+              },
+              {
+                "type": "text",
+                "text": "預測時間",
+                "size": "xl"
+              }
+            ]
+          },
+          {
+            "type": "box",
+            "layout": "baseline",
+            "contents": [
+              {
+                "type": "icon",
+                "url": "https://cdn-icons-png.flaticon.com/512/2623/2623825.png",
+                "size": "xl"
+              },
+              {
+                "type": "text",
+                "text": "天氣型態",
+                "wrap": true,
+                "weight": "regular",
+                "size": "xl",
+                "flex": 0
+              }
+            ]
+          },
+          {
+            "type": "box",
+            "layout": "baseline",
+            "contents": [
+              {
+                "type": "icon",
+                "url": "https://img.icons8.com/cotton/344/thermometer-down--v1.png",
+                "size": "xl"
+              },
+              {
+                "type": "text",
+                "text": "最低溫",
+                "size": "xl"
+              }
+            ]
+          },
+          {
+            "type": "box",
+            "layout": "baseline",
+            "contents": [
+              {
+                "type": "icon",
+                "url": "https://img.icons8.com/cotton/344/thermometer-up--v1.png",
+                "size": "xl"
+              },
+              {
+                "type": "text",
+                "text": "最高溫",
+                "size": "xl"
+              }
+            ]
+          },
+          {
+            "type": "box",
+            "layout": "baseline",
+            "contents": [
+              {
+                "type": "icon",
+                "url": "https://img.icons8.com/cotton/344/umbrella.png",
+                "size": "xl"
+              },
+              {
+                "type": "text",
+                "text": "降雨機率",
+                "size": "xl"
+              }
+            ]
+          },
+          {
+            "type": "box",
+            "layout": "baseline",
+            "contents": [
+              {
+                "type": "icon",
+                "url": "https://cdn-icons-png.flaticon.com/512/6701/6701655.png",
+                "size": "xl"
+              },
+              {
+                "type": "text",
+                "text": "舒適度",
+                "size": "xl"
+              }
+            ]
+          }
+        ]
+      },
+      "footer": {
+        "type": "box",
+        "layout": "vertical",
+        "spacing": "sm",
+        "contents": [
+          {
+            "type": "button",
+            "style": "primary",
+            "action": {
+              "type": "uri",
+              "label": "詳細預報",
+              "uri": "https://www.cwb.gov.tw/V8/C/"
+            },
+            "color": "#7EACB0CC"
+          }
+        ]
+      }
+    },
+    {
+      "type": "bubble",
+      "body": {
+        "type": "box",
+        "layout": "vertical",
+        "spacing": "sm",
+        "contents": [
+          {
+            "type": "text",
+            "text": "未來24小時預報",
+            "wrap": true,
+            "weight": "bold",
+            "size": "xl"
+          },
+          {
+            "type": "separator",
+            "margin": "xl"
+          },
+          {
+            "type": "box",
+            "layout": "baseline",
+            "contents": [
+              {
+                "type": "icon",
+                "url": "https://cdn-icons-png.flaticon.com/512/2693/2693710.png",
+                "size": "xl"
+              },
+              {
+                "type": "text",
+                "text": "預測時間",
+                "size": "xl"
+              }
+            ]
+          },
+          {
+            "type": "box",
+            "layout": "baseline",
+            "contents": [
+              {
+                "type": "icon",
+                "url": "https://cdn-icons-png.flaticon.com/512/2623/2623825.png",
+                "size": "xl"
+              },
+              {
+                "type": "text",
+                "text": "天氣型態",
+                "wrap": true,
+                "weight": "regular",
+                "size": "xl",
+                "flex": 0
+              }
+            ]
+          },
+          {
+            "type": "box",
+            "layout": "baseline",
+            "contents": [
+              {
+                "type": "icon",
+                "url": "https://img.icons8.com/cotton/344/thermometer-down--v1.png",
+                "size": "xl"
+              },
+              {
+                "type": "text",
+                "text": "最低溫",
+                "size": "xl"
+              }
+            ]
+          },
+          {
+            "type": "box",
+            "layout": "baseline",
+            "contents": [
+              {
+                "type": "icon",
+                "url": "https://img.icons8.com/cotton/344/thermometer-up--v1.png",
+                "size": "xl"
+              },
+              {
+                "type": "text",
+                "text": "最高溫",
+                "size": "xl"
+              }
+            ]
+          },
+          {
+            "type": "box",
+            "layout": "baseline",
+            "contents": [
+              {
+                "type": "icon",
+                "url": "https://img.icons8.com/cotton/344/umbrella.png",
+                "size": "xl"
+              },
+              {
+                "type": "text",
+                "text": "降雨機率",
+                "size": "xl"
+              }
+            ]
+          },
+          {
+            "type": "box",
+            "layout": "baseline",
+            "contents": [
+              {
+                "type": "icon",
+                "url": "https://cdn-icons-png.flaticon.com/512/6701/6701655.png",
+                "size": "xl"
+              },
+              {
+                "type": "text",
+                "text": "舒適度",
+                "size": "xl"
+              }
+            ]
+          }
+        ]
+      },
+      "footer": {
+        "type": "box",
+        "layout": "vertical",
+        "spacing": "sm",
+        "contents": [
+          {
+            "type": "button",
+            "style": "primary",
+            "action": {
+              "type": "uri",
+              "label": "詳細預報",
+              "uri": "https://www.cwb.gov.tw/V8/C/"
+            },
+            "color": "#7EACB0CC"
+          }
+        ]
+      }
+    },
+    {
+      "type": "bubble",
+      "body": {
+        "type": "box",
+        "layout": "vertical",
+        "spacing": "sm",
+        "contents": [
+          {
+            "type": "text",
+            "text": "未來36小時預報",
+            "wrap": true,
+            "weight": "bold",
+            "size": "xl"
+          },
+          {
+            "type": "separator",
+            "margin": "xl"
+          },
+          {
+            "type": "box",
+            "layout": "baseline",
+            "contents": [
+              {
+                "type": "icon",
+                "url": "https://cdn-icons-png.flaticon.com/512/2693/2693710.png",
+                "size": "xl"
+              },
+              {
+                "type": "text",
+                "text": "預測時間",
+                "size": "xl"
+              }
+            ]
+          },
+          {
+            "type": "box",
+            "layout": "baseline",
+            "contents": [
+              {
+                "type": "icon",
+                "url": "https://cdn-icons-png.flaticon.com/512/2623/2623825.png",
+                "size": "xl"
+              },
+              {
+                "type": "text",
+                "text": "天氣型態",
+                "wrap": true,
+                "weight": "regular",
+                "size": "xl",
+                "flex": 0
+              }
+            ]
+          },
+          {
+            "type": "box",
+            "layout": "baseline",
+            "contents": [
+              {
+                "type": "icon",
+                "url": "https://img.icons8.com/cotton/344/thermometer-down--v1.png",
+                "size": "xl"
+              },
+              {
+                "type": "text",
+                "text": "最低溫",
+                "size": "xl"
+              }
+            ]
+          },
+          {
+            "type": "box",
+            "layout": "baseline",
+            "contents": [
+              {
+                "type": "icon",
+                "url": "https://img.icons8.com/cotton/344/thermometer-up--v1.png",
+                "size": "xl"
+              },
+              {
+                "type": "text",
+                "text": "最高溫",
+                "size": "xl"
+              }
+            ]
+          },
+          {
+            "type": "box",
+            "layout": "baseline",
+            "contents": [
+              {
+                "type": "icon",
+                "url": "https://img.icons8.com/cotton/344/umbrella.png",
+                "size": "xl"
+              },
+              {
+                "type": "text",
+                "text": "降雨機率",
+                "size": "xl"
+              }
+            ]
+          },
+          {
+            "type": "box",
+            "layout": "baseline",
+            "contents": [
+              {
+                "type": "icon",
+                "url": "https://cdn-icons-png.flaticon.com/512/6701/6701655.png",
+                "size": "xl"
+              },
+              {
+                "type": "text",
+                "text": "舒適度",
+                "size": "xl"
+              }
+            ]
+          }
+        ]
+      },
+      "footer": {
+        "type": "box",
+        "layout": "vertical",
+        "spacing": "sm",
+        "contents": [
+          {
+            "type": "button",
+            "style": "primary",
+            "action": {
+              "type": "uri",
+              "label": "詳細預報",
+              "uri": "https://www.cwb.gov.tw/V8/C/"
+            },
+            "color": "#7EACB0CC"
+          }
+        ]
+      }
+    }
+  ]
+}
