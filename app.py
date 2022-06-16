@@ -82,7 +82,7 @@ def get_report(city): #得到xx縣市的未來36小時預報
         template_weather_report["contents"][info2]["body"]["contents"][10]["contents"][1]["text"] = all_weather_report[info2]["CI:"]
 
 #     print("\n\n",template_weather_report)
-#     return template_weather_report
+    return template_weather_report
 
     
 
