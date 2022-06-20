@@ -4,6 +4,11 @@ import re
 import requests
 import json
 import urllib
+from bs4 import BeautifulSoup
+import datetime
+from selenium import webdriver
+from selenium.webdriver.chrome.options import Options 
+import webbrowser 
 from flask import Flask, request, abort
 from linebot import (
     LineBotApi, WebhookHandler
@@ -19,6 +24,11 @@ line_bot_api = LineBotApi("+4c+TJ4dHfpEIsAY3L3LIdEmb8RZFTCDezGFjXQ1lltT6fGyDO5Nx
 handler = WebhookHandler("a7420fa246b9ca505639127a4d17a6b4")
 
 line_bot_api.push_message("U0df021adfd3f8fe6ed8df8df5c331652",TextSendMessage(text="你可以開始了"))
+
+chrome_options = Options()
+chrome_options.add_argument("--headless") # 啟動 Headless 無頭模式
+chrome_options.add_argument("--disable-gpu") # 關閉 GPU 避免某些系統或是網頁出錯
+browser = webdriver.Chrome('C:\\Users\\yiyin\\Desktop\\chromedriver.exe' , chrome_options=chrome_options)
 
 #回報heroku和linebot是否串接成功
 #監聽所有來自 /callback的Post Request
@@ -85,7 +95,80 @@ def get_report(city): #得到xx縣市的未來36小時預報
     return template_weather_report
 
     
+def get_picture():
+    res = requests.get("https://www.cwb.gov.tw/V8/C/") #到氣象局網站
+    soup = BeautifulSoup(res.text)
+    # print(soup)
+    #找到衛星雲圖的連結
+    weather_link = {}
+    links = soup.find_all("div",class_="tab-default vision_2")[0].find_all("div",class_="col-xs-6 col-md-3 px-5p")
+    weather_link["satellite"] = ["https://www.cwb.gov.tw"+ links[0].a.get("href")]
+    weather_link["radar"] = ["https://www.cwb.gov.tw"+ links[1].a.get("href")]
+    weather_link["rain"] = ["https://www.cwb.gov.tw"+ links[2].a.get("href")]
+    weather_link["UVI"] = ["https://www.cwb.gov.tw"+ links[3].a.get("href")]
+    weather_link["lightning"] = ["https://www.cwb.gov.tw"+ links[4].a.get("href")]
+    weather_link["temperature"] = ["https://www.cwb.gov.tw"+ links[5].a.get("href")]
+    weather_link["healthweather"] = [links[6].a.get("href") , "https://www.cwb.gov.tw"+ links[6].img.get("src")]
 
+    # print(weather_link)
+
+    #用selenium抓取網頁連結及天氣圖連結
+    browser.get("https://www.cwb.gov.tw/V8/C/")
+    #衛星雲圖
+    browser.find_element_by_xpath("/html/body/main/section[1]/div[1]/div/div/div[2]/div/div[1]/a").click()
+    soup_next_page = BeautifulSoup(browser.page_source, 'html.parser')
+    satellite = ("https://www.cwb.gov.tw"+soup_next_page.find_all("div",id="link-1")[0].img.get("src"))
+    weather_link["satellite"].append(satellite)
+    # print(satellite)
+    # print(weather_link)
+    browser.back()
+
+    #雷達迴波圖
+    browser.find_element_by_xpath("/html/body/main/section[1]/div[1]/div/div/div[2]/div/div[2]/a").click()
+    soup_next_page = BeautifulSoup(browser.page_source, 'html.parser')
+    radar = ("https://www.cwb.gov.tw"+soup_next_page.find_all("div",id="link-1")[0].img.get("src"))
+    weather_link["radar"].append(radar)
+    # print(radar)
+    # print(weather_link)
+    browser.back()
+
+    #雨量
+    browser.find_element_by_xpath("/html/body/main/section[1]/div[1]/div/div/div[2]/div/div[3]/a").click()
+    soup_next_page = BeautifulSoup(browser.page_source, 'html.parser')
+    rainfall = ("https://www.cwb.gov.tw"+soup_next_page.find_all("div",id="link-1")[0].img.get("src"))
+    weather_link["rain"].append(rainfall)
+    # print(rainfall)
+    browser.back()
+
+    #紫外線
+    browser.find_element_by_xpath("/html/body/main/section[1]/div[1]/div/div/div[2]/div/div[4]/a").click()
+    soup_next_page = BeautifulSoup(browser.page_source, 'html.parser')
+    UVI = ("https://www.cwb.gov.tw"+soup_next_page.find_all("div",id="tab-1")[0].img.get("src"))
+    weather_link["UVI"].append(UVI)
+    # print(UVI)
+    browser.back()
+
+    #即時閃電
+    browser.find_element_by_xpath("/html/body/main/section[1]/div[1]/div/div/div[2]/div/div[5]/a").click()
+    soup_next_page = BeautifulSoup(browser.page_source, 'html.parser')
+    lightning = ("https://www.cwb.gov.tw"+soup_next_page.find_all("div",class_="zoomHolder")[0].img.get("src"))
+    weather_link["lightning"].append(lightning)
+    # print(lightning)
+    browser.back()
+
+    #溫度
+    browser.find_element_by_xpath("/html/body/main/section[1]/div[1]/div/div/div[2]/div/div[6]/a").click()
+    soup_next_page = BeautifulSoup(browser.page_source, 'html.parser')
+    temperature = ("https://www.cwb.gov.tw"+soup_next_page.find_all("div",id="link-1")[0].img.get("src"))
+    weather_link["temperature"].append(temperature)
+    # print(temperature)
+    browser.back()
+
+
+    print(weather_link)
+    return weather_link
+    
+    
 #訊息傳遞區塊
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
@@ -125,8 +208,8 @@ def handle_message(event):
         )
         line_bot_api.reply_message(event.reply_token, sticker_message)
     
-#輸入天氣回傳輸入框(flex_message對話框?)輸入要查詢的縣市天氣
-    if message[:2] == "天氣": #ex:使用者輸入"天氣台北市"
+#輸入"天氣縣市名">>查詢縣市天氣
+    elif message[:2] == "天氣": #ex:使用者輸入"天氣台北市"
         city = message[2:] #縣市名稱
         city = city.replace("台","臺")#臺取代台
         if not (city in cities): #如果縣市清單裡找不到使用者輸入的縣市名
@@ -137,7 +220,21 @@ def handle_message(event):
             template_weather_report = get_report(city)
             line_bot_api.reply_message(
                 event.reply_token,FlexSendMessage(city + "未來36小時天氣預報",template_weather_report))
-            
+    
+#回傳天氣圖
+    elif re.match("衛星雲圖" , message):
+        get_picture()
+        template_pic = json.load(
+        open("template_pic.json",'r',encoding="utf-8"))
+        
+        template_pic["contents"][0]["body"]["contents"][0]["url"] = weather_link["satellite"][1]#天氣圖url
+        template_pic["contents"][0]["body"]["contents"][1]["contents"][0]["contents"][1]["contents"][1]["action"]["uri"] = weather_link["satellite"][0]#網頁uri
+        template_pic["contents"][0]["body"]["contents"][2]["contents"][0]["text"] = datetime.date.today() #顯示天氣圖的時間
+        
+        line_bot_api.reply_message(
+                event.reply_token,FlexSendMessage("衛星雲圖",template_pic))
+    
+    
     else: #學你說話
         line_bot_api.reply_message(event.reply_token, TextSendMessage(message))
 
