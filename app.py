@@ -99,7 +99,7 @@ def get_radar_picture():
 
     #找到雷達回波圖的連結
     res = requests.get("https://www.cwb.gov.tw/V8/C/") #到氣象局網站
-    soup = BeautifulSoup(res.text ,"lxml")
+    soup = BeautifulSoup(res.text ,"html.parser")
     links = soup.find_all("div",class_="tab-default vision_2")[0].find_all("div",class_="col-xs-6 col-md-3 px-5p")
     template_pic["contents"][0]["body"]["contents"][1]["contents"][0]["contents"][1]["contents"][1]["action"]["uri"] = ["https://www.cwb.gov.tw"+ links[1].a.get("href")]
 
