@@ -93,13 +93,14 @@ def get_radar_picture():
     url = "https://opendata.cwb.gov.tw/fileapi/v1/opendataapi/O-A0058-001?Authorization=CWB-AE73C77F-25C6-4EDC-89C4-C86EC865B7C4&downloadType=WEB&format=JSON"
     response = requests.get(url) 
     radar = (json.loads(response.text)) #轉換成json格式
+    
     #打開flexmessage模板
     template_pic = json.load(open("template_pic.json",'r',encoding="utf-8"))
     template_pic["contents"][0]["body"]["contents"][0]["url"] = radar["cwbopendata"]["dataset"]["resource"]["uri"]
 
     #找到雷達回波圖的連結
     res = requests.get("https://www.cwb.gov.tw/V8/C/") #到氣象局網站
-    soup = BeautifulSoup(res.text ,"html.parser")
+    soup = BeautifulSoup(res.text,"html.parser")
     links = soup.find_all("div",class_="tab-default vision_2")[0].find_all("div",class_="col-xs-6 col-md-3 px-5p")
     template_pic["contents"][0]["body"]["contents"][1]["contents"][0]["contents"][1]["contents"][1]["action"]["uri"] = ["https://www.cwb.gov.tw"+ links[1].a.get("href")]
 
@@ -164,10 +165,8 @@ def handle_message(event):
                 event.reply_token,FlexSendMessage(city + "未來36小時天氣預報",template_weather_report))
     
 #回傳天氣圖
-    elif message[:2] == "雷達":
-        template_pic = get_radar_picture()
-        
-        
+    elif re.match("雷達"):
+        template_pic = get_radar_picture()        
         line_bot_api.reply_message(
                 event.reply_token,FlexSendMessage("雷達回波圖",template_pic))
     
