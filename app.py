@@ -5,8 +5,6 @@ import requests
 import json
 import urllib
 from bs4 import BeautifulSoup
-import time
-
 from flask import Flask, request, abort
 from linebot import (
     LineBotApi, WebhookHandler
@@ -22,7 +20,6 @@ line_bot_api = LineBotApi("+4c+TJ4dHfpEIsAY3L3LIdEmb8RZFTCDezGFjXQ1lltT6fGyDO5Nx
 handler = WebhookHandler("a7420fa246b9ca505639127a4d17a6b4")
 
 line_bot_api.push_message("U0df021adfd3f8fe6ed8df8df5c331652",TextSendMessage(text="你可以開始了"))
-
 
 
 #回報heroku和linebot是否串接成功
@@ -90,24 +87,27 @@ def get_report(city): #得到xx縣市的未來36小時預報
     return template_weather_report
 
     
+#利用api抓取雷達回測圖
 def get_radar_picture():
-    #打開api的json檔案
-    radar = json.load(
-    open("radar.json","r",encoding="utf-8")) 
+    #打開api
+    url = "https://opendata.cwb.gov.tw/fileapi/v1/opendataapi/O-A0058-001?Authorization=CWB-AE73C77F-25C6-4EDC-89C4-C86EC865B7C4&downloadType=WEB&format=JSON"
+    response = requests.get(url) 
+    radar = (json.loads(response.text)) #轉換成json格式
     #打開flexmessage模板
-    template_radar = json.load(open("template_radar.json",'r',encoding="utf-8"))
-    template_radar["contents"][0]["body"]["contents"][0]["url"] = radar["cwbopendata"]["dataset"]["resource"]["uri"]
+    template_pic = json.load(open("template_pic.json",'r',encoding="utf-8"))
+    template_pic["contents"][0]["body"]["contents"][0]["url"] = radar["cwbopendata"]["dataset"]["resource"]["uri"]
 
     #找到雷達回波圖的連結
     res = requests.get("https://www.cwb.gov.tw/V8/C/") #到氣象局網站
     soup = BeautifulSoup(res.text)
     links = soup.find_all("div",class_="tab-default vision_2")[0].find_all("div",class_="col-xs-6 col-md-3 px-5p")
-    template_radar["contents"][0]["body"]["contents"][1]["contents"][0]["contents"][1]["contents"][1]["action"]["uri"] = ["https://www.cwb.gov.tw"+ links[1].a.get("href")]
+    template_pic["contents"][0]["body"]["contents"][1]["contents"][0]["contents"][1]["contents"][1]["action"]["uri"] = ["https://www.cwb.gov.tw"+ links[1].a.get("href")]
 
     # pic["contents"][0]["body"]["contents"][2]["contents"][0]["text"] = datetime.date.today() #顯示天氣圖的時間
-    print(template_radar["contents"][0]["body"]["contents"][0]["url"])
-    print(template_radar["contents"][0]["body"]["contents"][1]["contents"][0]["contents"][1]["contents"][1]["action"]["uri"])
-    return template_radar
+    print(template_pic["contents"][0]["body"]["contents"][0]["url"])
+    print(template_pic["contents"][0]["body"]["contents"][1]["contents"][0]["contents"][1]["contents"][1]["action"]["uri"])
+    
+    return template_pic
 
     
     
@@ -165,11 +165,11 @@ def handle_message(event):
     
 #回傳天氣圖
     elif message[:2] == "雷達":
-        template_radar = get_radar_picture()
+        template_pic = get_radar_picture()
         
         
         line_bot_api.reply_message(
-                event.reply_token,FlexSendMessage("雷達回波圖",template_radar))
+                event.reply_token,FlexSendMessage("雷達回波圖",template_pic))
     
     
     else: #學你說話
