@@ -165,7 +165,7 @@ def handle_message(event):
                 event.reply_token,FlexSendMessage(city + "未來36小時天氣預報",template_weather_report))
     
 #回傳天氣圖
-    elif re.match("雷達"):
+    elif re.match("雷達",message):
         template_pic = get_radar_picture()        
         line_bot_api.reply_message(
                 event.reply_token,FlexSendMessage("雷達回波圖",template_pic))
