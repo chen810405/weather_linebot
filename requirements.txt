@@ -1,7 +1,6 @@
 flask==2.0.3
-beautifulsoup4==4.6.3
+BeautifulSoup4==4.6.3
 requests==2.20.1
 line-bot-sdk==1.19.0
 datetime
 matplotlib
-selenium
