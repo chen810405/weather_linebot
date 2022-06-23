@@ -16,8 +16,8 @@ from linebot.models import *
 
 
 app = Flask(__name__)
-line_bot_api = LineBotApi("+4c+TJ4dHfpEIsAY3L3LIdEmb8RZFTCDezGFjXQ1lltT6fGyDO5Nxbgx8FpRhkI3CGi43KU5sI79Xk75StU7ot95s/RAqcUcBDQwqBwf36W819plH7QckBa9C/IqN4Rl5uolz7mRo9ozGqu4KKzKkgdB04t89/1O/w1cDnyilFU=")
-handler = WebhookHandler("a7420fa246b9ca505639127a4d17a6b4")
+line_bot_api = LineBotApi("U+8ZABtbl+W6Avx2wD4eJe5duEvhckmONKk1pvUo7lIsi39v1Q4K/Xc32GiWWgfbDcq9QULxSU/3Umpe4siZZFlBKh1q68UD7tyzMx3fn3bIEXb3n8D9hB1VN6GulosxHRpwoirif8t1XHbxBjhLtgdB04t89/1O/w1cDnyilFU=")
+handler = WebhookHandler("926fc4ba84e768e82b3e87e2136c699f")
 
 line_bot_api.push_message("U0df021adfd3f8fe6ed8df8df5c331652",TextSendMessage(text="你可以開始了"))
 
