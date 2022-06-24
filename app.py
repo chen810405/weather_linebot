@@ -169,9 +169,9 @@ def handle_message(event):
     
 #回傳天氣圖
     elif re.match("雷達",message):
-        template_pic = get_radar_picture()        
-        line_bot_api.reply_message(
-                event.reply_token,FlexSendMessage("雷達回波圖",template_pic))
+        template_pic = get_radar_picture()      
+        print(template_pic)
+        line_bot_api.reply_message(event.reply_token,FlexSendMessage("雷達回波圖",template_pic))
     
     
     else: #學你說話
