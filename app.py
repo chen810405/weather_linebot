@@ -109,7 +109,7 @@ def get_radar_picture():
     # pic["contents"][0]["body"]["contents"][2]["contents"][0]["text"] = datetime.date.today() #顯示天氣圖的時間
     print(template_pic["contents"][0]["body"]["contents"][0]["url"])
     print(template_pic["contents"][0]["body"]["contents"][1]["contents"][0]["contents"][1]["contents"][1]["action"]["uri"])
-    
+    print(template_pic)
     return template_pic
 
     
